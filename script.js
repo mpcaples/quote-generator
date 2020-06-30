@@ -5,24 +5,34 @@ const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter'); 
 const newQuoteBtn = document.getElementById('new-quote'); 
 const loader = document.getElementById('loader'); 
+const errorContainer = document.getElementById('error-container'); 
 
+function hideErrorMessage() {
+    errorContainer.hidden = true; 
+}
+
+function showErrorMessage() {
+    errorContainer.hidden = false; 
+}
 
 function showLoader() {
     loader.hidden = false; 
-    quoteContainer.hidden = true; 
+    quoteContainer.hidden = true;   
+    hideErrorMessage(); 
 }
 
 function hideLoader() {
     if (!loader.hidden) {
         quoteContainer.hidden = false; 
         loader.hidden = true; 
+        hideErrorMessage(); 
     }
 }
 
 
 // Get quote from API 
-async function getQuote() {
-    showLoader(); 
+async function getQuote() {  
+    showLoader();
     const proxyURL = 'https://cors-anywhere.herokuapp.com/'; 
     const apiURL = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json'; 
     try {
@@ -44,11 +54,10 @@ async function getQuote() {
         quoteText.innerText = data.quoteText; 
         // Stop loader, show quote: 
         hideLoader(); 
-    
+       
     } catch (error) {
-
-        quoteText.innerText = 'Sorry, we encountered an error. Please refresh the page to try again.'
-        
+        loader.hidden = true; 
+        showErrorMessage(); 
     }
 }; 
 

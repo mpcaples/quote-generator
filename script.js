@@ -47,10 +47,7 @@ async function getQuote() {
     
     } catch (error) {
 
-        for (let counter = 0; counter < 10; counter++) {
-            getQuote(); 
-        }
-        quoteText.innerText = 'Sorry, we were unable to retrieve a quote at this time.'
+        quoteText.innerText = 'Sorry, we encountered an error. Please refresh the page to try again.'
         
     }
 }; 
